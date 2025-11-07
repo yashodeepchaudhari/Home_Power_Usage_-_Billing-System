@@ -1,0 +1,78 @@
+/*package electricity.system;
+
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class database {
+    Connection connection;
+    Statement statement;
+    database(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/Bill_system","root","YashMysql@24");
+            statement=connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+//jdbc:mysql://localhost:3306/?user=root
+*/
+
+package electricity.system;
+
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class database {
+    private Connection connection;
+     Statement statement;
+
+    public database() {
+        try {
+            // Register JDBC driver (optional with newer versions of JDBC)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish a connection
+            connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/Bill_system", 
+                "root", 
+                "YashMysql@24"
+            );
+
+            // Create a Statement object
+            statement = connection.createStatement();
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC Driver not found.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("Connection or SQL issue.");
+            e.printStackTrace();
+        }
+    }
+
+    // Getter methods for connection and statement if needed
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public Statement getStatement() {
+        return statement;
+    }
+
+    // Optionally, a method to close resources
+    public void close() {
+        try {
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
